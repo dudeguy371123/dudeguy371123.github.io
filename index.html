@@ -28,7 +28,11 @@
 <body>
 
   <h1><center>Let's see what race you are!</center></h1>
-
+  <audio id="BlackSound" src="Chirp.mp3"></audio>
+  <audio id="AsiaSound" src="gong.mp3"></audio>
+  <audio id="WhiteSound" src="whitenoise.mp3"></audio>
+  <audio id="IndSound" src="Indian.mp3"></audio>
+  <audio id="MexSound" src="taco.mp3"></audio>
   <!-- Questions -->
   <div id="quiz">
     <script>
@@ -137,18 +141,23 @@
         n = 0
         if b >= a and b >= w and b >= i and b >= m:
             display("You are black. This means you have a big penis and are good at sports. Unfortunately you have no rights or father figures.", target="result")
+            document.getElementById("BlackSound").play()
             n += 1
         if a >= w and a >= i and a >= m and a >= b:
             display("You are asian. This means you are smart and get good grades. Unfortunately you have a small penis and are a bad driver.", target="result")
+            document.getElementById("AsiaSound").play()
             n += 1
         if w >= i and w >= m and w >= b and w >= a:
             display("You are white. This means you will have no problem if cops pull you over. Unfortunately you suck at basketball and have no spice tolerance.", target="result")
+            document.getElementById("WhiteSound").play()
             n += 1
         if i >= m and i >= b and i >= a and i >= w:
             display("You are indian. There is no positive to being indian.", target="result")
+            document.getElementById("IndSound").play()
             n += 1
         if m >= b and m >= a and m >= w and m >= i:
             display("You are mexican. This means you always eat great meals. Unfortunately ICE might be on your ass at any point.", target="result")
+            document.getElementById("MexSound").play()
             n += 1
 
         if n > 1:
@@ -179,3 +188,4 @@
 
 </body>
 </html>
+
