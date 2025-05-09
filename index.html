@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Judging Strengths (Math or English)</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.3.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2025.3.1/core.js"></script>
+
+    <style>
+      .selected {
+          background-color: #4CAF50;
+          color: white;
+      }
+      .not-selected {
+          background-color: #f1f1f1;
+          color: black;
+      }
+      #submit-container {
+          margin-top: 20px;
+      }
+      #result {
+            text-align: center; /* Ensures text is centered */
+        }
+    </style>
+</head>
+<body>
+
+  <h1><center>Let's see what race you are!</center></h1>
+
+  <!-- Questions -->
+  <div id="quiz">
+    <script>
+      const questions = [
+        "one", "two", "three", "four", "five", "six", "seven",
+        "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+        "fifteen", "sixteen", "seventeen", "eighteen", "ninteen", "twenty"
+      ];
+      const labels = {
+        "one": "Are you good at math?",
+        "two": "Do you like fried chicken?",
+        "three": "Do you use deodorant?",
+        "four": "Are you a good driver?",
+        "five": "Do you confuse fireworks with gunshots?",
+        "six": "Do you know who your dad is?",
+        "seven": "Do you season your chicken?",
+        "eight": "Does your house always smell like curry?",
+        "nine": "Do you think dogs are tasty?",
+        "ten": "Did your family migrate legally to America?",
+        "eleven": "Can people tell if your eyes are open?",
+        "twelve": "Do you feel like you are going to get shot when you are around police?",
+        "thirteen": "Do you like Taylor Swift?",
+        "fourteen": "Do you say the n word often?",
+        "fifteen": "Do you say the n word often but with the hard r?",
+        "sixteen": "Is your penis big?",
+        "seventeen": "Is your primary source of income mowing lawns?",
+        "eighteen": "Are you good at basketball?",
+        "ninteen": "Do you think salt is spicy?",
+        "twenty": "Do you have multiple baby mamas?"
+      };
+      for (let q of questions) {
+        document.write(`<h2>${labels[q]}</h2>`);
+        document.write(`<button id="${q}Yes" class="not-selected">Yes</button>`);
+        document.write(`<button id="${q}No" class="not-selected">No</button>`);
+      }
+    </script>
+  </div>
+
+  <!-- Submit Button -->
+  <div id="submit-container">
+    <button id="submitBtn">Submit</button>
+  </div>
+
+  <p id="result"></p>
+
+  <!-- PyScript -->
+  <py-script>
+    from pyscript import display
+    from js import document
+
+    b = 0
+    w = 0
+    a = 0
+    i = 0
+    m = 0
+    answers = {}
+
+    def update_scores(subject, answer):
+        global b, w, a, i, m, answers
+        answers[subject] = answer
+
+    def display_result():
+        global b, w, a, i, m
+        b = 0
+        w = 0
+        a = 0
+        i = 0
+        m = 0
+
+        logic = {
+            "one": ("a", "Yes"),
+            "two": ("b", "Yes"),
+            "three": ("i", "No"),
+            "four": ("a", "No"),
+            "five": ("w", "Yes"),
+            "six": ("b", "No"),
+            "seven": ("w", "No"),
+            "eight": ("i", "Yes"),
+            "nine": ("a", "Yes"),
+            "ten": ("m", "No"),
+            "eleven": ("a", "No"),
+            "twelve": ("b", "Yes"),
+            "thirteen": ("w", "Yes"),
+            "fourteen": ("b", "Yes"),
+            "fifteen": ("w", "Yes"),
+            "sixteen": ("b", "Yes"),
+            "seventeen": ("m", "Yes"),
+            "eighteen": ("b", "Yes"),
+            "ninteen": ("w", "Yes"),
+            "twenty": ("b", "Yes")
+        }
+
+        for question, (track, expected) in logic.items():
+            if answers.get(question) == expected:
+                if track == "b":
+                    b += 1
+                if track == "w":
+                    w += 1
+                if track == "a":
+                    a += 1    
+                if track == "i":
+                    i += 1
+                if track == "m":
+                    m += 1    
+
+        n = 0
+        if b >= a and b >= w and b >= i and b >= m:
+            display("You are black. This means you have a big penis and are good at sports. Unfortunately you have no rights or father figures.", target="result")
+            n += 1
+        if a >= w and a >= i and a >= m and a >= b:
+            display("You are asian. This means you are smart and get good grades. Unfortunately you have a small penis and are a bad driver.", target="result")
+            n += 1
+        if w >= i and w >= m and w >= b and w >= a:
+            display("You are white. This means you will have no problem if cops pull you over. Unfortunately you suck at basketball and have no spice tolerance.", target="result")
+            n += 1
+        if i >= m and i >= b and i >= a and i >= w:
+            display("You are indian. There is no positive to being indian.", target="result")
+            n += 1
+        if m >= b and m >= a and m >= w and m >= i:
+            display("You are mexican. This means you always eat great meals. Unfortunately ICE might be on your ass at any point.", target="result")
+            n += 1
+
+        if n > 1:
+            display("You are mixed. Your parents screwed up and decided to mix colors.", target="result")
+
+    def select_button(button, other_button, subject, answer):
+        update_scores(subject, answer)
+        button.classList.add("selected")
+        button.classList.remove("not-selected")
+        other_button.classList.remove("selected")
+        other_button.classList.add("not-selected")
+
+    ids = [
+        "one", "two", "three", "four", "five", "six", "seven",
+        "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+        "fifteen", "sixteen", "seventeen", "eighteen", "ninteen", "twenty"
+    ]
+
+    for q in ids:
+        yes_btn = document.getElementById(f"{q}Yes")
+        no_btn = document.getElementById(f"{q}No")
+        yes_btn.onclick = lambda evt, q=q, y=yes_btn, n=no_btn: select_button(y, n, q, "Yes")
+        no_btn.onclick = lambda evt, q=q, y=yes_btn, n=no_btn: select_button(n, y, q, "No")
+
+    document.getElementById("submitBtn").onclick = lambda evt: display_result()
+    document.getElementById("result").style.fontSize = "3em"
+  </py-script>
+
+</body>
+</html>
