@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Am I A Nigga? (God I Hope Not)</title>
+    <title>What Race am I?</title>
 
     <link rel="stylesheet" href="https://pyscript.net/releases/2025.3.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2025.3.1/core.js"></script>
@@ -61,15 +61,15 @@
       };
       for (let q of questions) {
         document.write(`<h2>${labels[q]}</h2>`);
-        document.write(`<button id="${q}Yes" class="not-selected">Yes</button>`);
-        document.write(`<button id="${q}No" class="not-selected">No</button>`);
+        document.write(`<button id="${q}Yes" type="button" class="not-selected">Yes</button>`);
+        document.write(`<button id="${q}No" type="button" class="not-selected">No</button>`);
       }
     </script>
   </div>
 
   <!-- Submit Button -->
   <div id="submit-container">
-    <button id="submitBtn">Submit</button>
+    <button id="submitBtn" type="button">Submit</button>
   </div>
 
   <p id="result"></p>
