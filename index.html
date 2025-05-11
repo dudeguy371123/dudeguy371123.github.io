@@ -72,10 +72,11 @@
   </div>
 
   <!-- Submit Button -->
-  <div id="submit-container">
-    <button id="submitBtn" type="button">Submit</button>
-  </div>
 
+  <div id="submit-container">
+    <button id="submitBtn">Submit</button>
+    <button id="resetBtn">Reset</button> <!-- New reset button -->
+  </div>
   <p id="result"></p>
 
   <!-- PyScript -->
@@ -163,6 +164,23 @@
         if n > 1:
             display("You are mixed. Your parents screwed up and decided to mix colors.", target="result")
 
+    def reset_quiz():
+        from js import document
+        global answers, b, w, a, i, m
+        answers = {}
+        b = w = a = i = m = 0
+
+        for q in ids:
+            yes_btn = document.getElementById(f"{q}Yes")
+            no_btn = document.getElementById(f"{q}No")
+            yes_btn.classList.remove("selected")
+            yes_btn.classList.add("not-selected")
+            no_btn.classList.remove("selected")
+            no_btn.classList.add("not-selected")
+
+        document.getElementById("result").innerHTML = ""
+    
+            
     def select_button(button, other_button, subject, answer):
         update_scores(subject, answer)
         button.classList.add("selected")
@@ -181,11 +199,13 @@
         no_btn = document.getElementById(f"{q}No")
         yes_btn.onclick = lambda evt, q=q, y=yes_btn, n=no_btn: select_button(y, n, q, "Yes")
         no_btn.onclick = lambda evt, q=q, y=yes_btn, n=no_btn: select_button(n, y, q, "No")
-
+    
+   
     document.getElementById("submitBtn").onclick = lambda evt: display_result()
     document.getElementById("result").style.fontSize = "3em"
+    document.getElementById("resetBtn").onclick = lambda evt: reset_quiz()
+    
   </py-script>
 
 </body>
 </html>
-
